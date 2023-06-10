@@ -73,7 +73,10 @@ if __name__ == "__main__":
     binary = os.path.abspath(binary)
 
     if remove_solve:
-        os.remove('./solve.py')
+        try:
+            os.remove('./solve.py')
+        except FileNotFoundError:
+            pass
 
     if not os.path.exists(binary):
         print(f"File {binary} doesn't exists")
