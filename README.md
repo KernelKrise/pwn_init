@@ -18,30 +18,30 @@ options:
   
   Example:
   ```
-  $ ./pwn_init.py -r -b chall -l libc.so.6 
-/home/kali/Desktop/pwn_init/chall: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=8fe1cb6cb20bb7fe6b118857afb6ba7233345a41, for GNU/Linux 3.2.0, not stripped
-[*] '/home/kali/Desktop/pwn_init/chall'
+$ ./pwn_init.py -b binary -l libc.so.6 
+/home/kali/Desktop/binary: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=85964a3fa417fe160d44bc7dc0db72a166abc516, for GNU/Linux 3.2.0, not stripped
+[*] '/home/kali/Desktop/binary'
     Arch:     amd64-64-little
     RELRO:    Partial RELRO
-    Stack:    No canary found
+    Stack:    Canary found
     NX:       NX enabled
     PIE:      No PIE (0x400000)
 Good luck, have fun!
 ```
 
 Result (solve.py):
-```
+```python
 #!/usr/bin/env python3
 from pwn import *
 
 
-elf = ELF('/home/kali/Desktop/pwn_init/chall')
+elf = context.binary = ELF('/home/kali/Desktop/binary')
+context.log_level = "DEBUG"
 rop = ROP(elf)
-libc = ELF('/home/kali/Desktop/pwn_init/libc.so.6')
+libc = ELF('/home/kali/Desktop/libc.so.6')
 rop_libc = ROP(libc)
-context.arch = elf.arch
 
-p = process('/home/kali/Desktop/pwn_init/chall', env={"LD_PRELOAD":"/home/kali/Desktop/pwn_init/libc.so.6"})
+p = process('/home/kali/Desktop/binary', env={"LD_PRELOAD":"/home/kali/Desktop/libc.so.6"})
 gdb.attach(p, gdbscript='b *FUNC+NUM')
 # p = remote('IP', PORT)
 
@@ -55,6 +55,10 @@ p.interactive()
 
 
 # TOOLS
+
+# p = process(['/chall/ld-linux-x86-64.so.2', '/chall/binary'], env={"LD_LIBRARY_PATH":"/chall"})
+# context(log_level='debug',arch='amd64',terminal=['tmux','splitw','-h'])
+# context.terminal = ["tmux", "splitw", "-h"]
 
 # bin_sh = next(libc.search(b'/bin/sh')) + libc_addr
 # pop_xxx = rop_libc.find_gadget(['pop xxx', 'ret']).address + libc_addr
@@ -71,6 +75,6 @@ p.interactive()
 # frame.rsi = 0  
 # frame.rdx = 0
 
-# one_gadget /home/kali/Desktop/pwn_init/libc.so.6
-# ROPgadget --binary /home/kali/Desktop/pwn_init/chall
+# one_gadget /home/kali/Desktop/libc.so.6
+# ROPgadget --binary /home/kali/Desktop/binary
 ```
