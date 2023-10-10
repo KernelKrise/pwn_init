@@ -2,7 +2,7 @@
 Initializing everything you need to solve the pwn challenge
 
 Usage:
-```
+```bash
 $ ./pwn_init.py -h                                          
 usage: pwn_init.py [-h] [-b BINARY] [-l LIBC] [-r]
 
@@ -17,7 +17,7 @@ options:
   ```
   
   Example:
-  ```
+  ```bash
 $ ./pwn_init.py -b binary -l libc.so.6 
 /home/kali/Desktop/binary: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=85964a3fa417fe160d44bc7dc0db72a166abc516, for GNU/Linux 3.2.0, not stripped
 [*] '/home/kali/Desktop/binary'
