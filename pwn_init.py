@@ -7,11 +7,11 @@ SOLVE_TEMPLATE = """#!/usr/bin/env python3
 from pwn import *
 
 
-elf = ELF('BINARY_PATH')
+elf = context.binary = ELF('BINARY_PATH')
+context.log_level = "DEBUG"
 rop = ROP(elf)
 #LIBC libc = ELF('LIBC_PATH')
 #LIBC rop_libc = ROP(libc)
-context.arch = elf.arch
 
 #BIN p = process('BINARY_PATH')
 #LIBC p = process('BINARY_PATH', env={"LD_PRELOAD":"LIBC_PATH"})
@@ -28,6 +28,10 @@ p.interactive()
 
 
 # TOOLS
+
+# p = process(['/chall/ld-linux-x86-64.so.2', '/chall/binary'], env={"LD_LIBRARY_PATH":"/chall"})
+# context(log_level='debug',arch='amd64',terminal=['tmux','splitw','-h'])
+# context.terminal = ["tmux", "splitw", "-h"]
 
 # bin_sh = next(libc.search(b'/bin/sh')) + libc_addr
 # pop_xxx = rop_libc.find_gadget(['pop xxx', 'ret']).address + libc_addr
