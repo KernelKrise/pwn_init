@@ -92,3 +92,7 @@ sudo docker build -t pwn_init .
 sudo docker run -it pwn_init bash
 ```
 You also can add docker volume to copy files
+```
+sudo docker run -v vol1:/lib -it pwn_init bash
+```
+Find volume at /var/lib/docker/volumes
