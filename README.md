@@ -1,6 +1,7 @@
 # pwn_init
 Initializing everything you need to solve the pwn challenge
 
+## pwn_init.py
 Usage:
 ```
 $ ./pwn_init.py -h                                          
@@ -78,3 +79,16 @@ p.interactive()
 # one_gadget /home/kali/Desktop/libc.so.6
 # ROPgadget --binary /home/kali/Desktop/binary
 ```
+## Dockerfile
+This docker container designed to work with pwn challenges in docker container so that libc issues don't happen
+
+### Build
+```bash
+sudo docker build -t pwn_init .
+```
+
+### Run
+```
+sudo docker run -it pwn_init bash
+```
+You also can add docker volume to copy files
