@@ -8,7 +8,7 @@ from pwn import *
 
 
 elf = context.binary = ELF('BINARY_PATH')
-# context.log_level = "DEBUG"
+# context.log_level = "CRITICAL"
 rop = ROP(elf)
 #LIBC libc = ELF('LIBC_PATH')
 #LIBC rop_libc = ROP(libc)
